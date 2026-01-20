@@ -4,8 +4,7 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import LandingPage from './pages/LandingPage.jsx';
 import FeaturesPage from './pages/FeaturesPage.jsx';
-import FamilyDashboard from './pages/FamilyDashboard.jsx';
-import DoctorDashboard from './pages/DoctorDashboard.jsx';
+import DashboardShowcase from './pages/DashboardShowcase.jsx';
 import AuthPages from './pages/AuthPages.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import './styles/animations.css';
@@ -58,8 +57,9 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/features" element={<FeaturesPage />} />
-            <Route path="/family-dashboard" element={<FamilyDashboard />} />
-            <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
+            <Route path="/dashboard" element={<DashboardShowcase />} />
+            <Route path="/family-dashboard" element={<DashboardShowcase />} />
+            <Route path="/doctor-dashboard" element={<DashboardShowcase />} />
             <Route path="/auth/*" element={<AuthPages />} />
             <Route path="/about" element={<AboutPage />} />
           </Routes>

@@ -223,7 +223,7 @@ export const StaggeredMenu = ({
       {/* Overlay - uses opacity only for animation */}
       <div
         ref={overlayRef}
-        className="absolute inset-0 bg-black/30 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/50 backdrop-blur-md"
         onClick={handleClose}
         style={{ opacity: 0 }}
         aria-hidden="true"
@@ -232,7 +232,7 @@ export const StaggeredMenu = ({
       {/* Panel - uses transform: translateX only */}
       <aside
         ref={panelRef}
-        className="absolute top-0 right-0 h-full w-full sm:w-[85%] md:w-[70%] max-w-md bg-white shadow-2xl flex flex-col"
+        className="absolute top-0 right-0 h-full w-full sm:w-[85%] md:w-[70%] max-w-md bg-[#0a0118] shadow-2xl shadow-purple-500/20 flex flex-col border-l border-purple-500/20"
         style={{
           transform: 'translateX(100%)',
           // Hide scrollbar
@@ -246,7 +246,7 @@ export const StaggeredMenu = ({
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-6 right-6 p-3 text-gray-400 hover:text-purple-600 hover:bg-purple-50 rounded-xl transition-colors z-10"
+          className="absolute top-6 right-6 p-3 text-gray-400 hover:text-purple-400 hover:bg-purple-500/10 rounded-xl transition-colors z-10"
           aria-label="Close menu"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -262,6 +262,22 @@ export const StaggeredMenu = ({
             msOverflowStyle: 'none',
           }}
         >
+          {/* Logo & Brand Name */}
+          <div className="mb-8 pb-6 border-b border-white/10">
+            <div className="flex items-center gap-3">
+              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-purple-600 to-violet-700 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                <svg className="h-7 w-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54"/>
+                  <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54"/>
+                </svg>
+              </div>
+              <div>
+                <h2 className="text-xl font-bold bg-gradient-to-r from-white via-purple-200 to-purple-300 bg-clip-text text-transparent">ALZCare.eg</h2>
+                <p className="text-xs text-gray-400">AI-Powered Alzheimer's Care</p>
+              </div>
+            </div>
+          </div>
+
           {/* Menu Items */}
           <nav className="flex-1" role="navigation">
             <ul className="space-y-1">
@@ -275,12 +291,11 @@ export const StaggeredMenu = ({
                   <Link
                     to={item.link}
                     onClick={handleClose}
-                    className="group flex items-center gap-4 py-3 text-gray-900 hover:text-purple-600 transition-colors"
+                    className="group flex items-center gap-4 py-3 text-white hover:text-purple-400 transition-colors"
                   >
                     {displayItemNumbering && (
                       <span
-                        className="text-sm font-medium opacity-40 group-hover:opacity-100 transition-opacity"
-                        style={{ color: accentColor }}
+                        className="text-sm font-medium opacity-40 group-hover:opacity-100 transition-opacity text-purple-400"
                       >
                         {String(idx + 1).padStart(2, '0')}
                       </span>
@@ -298,12 +313,11 @@ export const StaggeredMenu = ({
           {displaySocials && socialItems.length > 0 && (
             <div
               ref={(el) => (itemsRef.current[items.length] = el)}
-              className="mt-auto pt-8 border-t border-gray-100"
+              className="mt-auto pt-8 border-t border-white/10"
               style={{ opacity: 0, transform: 'translateY(50px)' }}
             >
               <h3
-                className="text-sm font-semibold uppercase tracking-wider mb-4"
-                style={{ color: accentColor }}
+                className="text-sm font-semibold uppercase tracking-wider mb-4 text-purple-400"
               >
                 Follow Us
               </h3>
@@ -314,7 +328,7 @@ export const StaggeredMenu = ({
                     href={social.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-600 hover:text-purple-600 font-medium transition-colors"
+                    className="text-gray-400 hover:text-purple-400 font-medium transition-colors"
                   >
                     {social.label}
                   </a>
@@ -332,14 +346,14 @@ export const StaggeredMenu = ({
             <Link
               to="/auth/login"
               onClick={handleClose}
-              className="block w-full py-4 text-center text-purple-700 font-semibold text-lg border-2 border-purple-200 rounded-2xl hover:bg-purple-50 transition-colors"
+              className="block w-full py-4 text-center text-purple-400 font-semibold text-lg border-2 border-purple-500/30 rounded-2xl hover:bg-purple-500/10 hover:border-purple-500/50 transition-all"
             >
               Sign In
             </Link>
             <Link
               to="/auth/signup"
               onClick={handleClose}
-              className="block w-full py-4 text-center text-white font-semibold text-lg bg-gradient-to-r from-purple-600 to-purple-700 rounded-2xl shadow-lg hover:shadow-purple-500/25 transition-shadow"
+              className="block w-full py-4 text-center text-white font-semibold text-lg bg-gradient-to-r from-purple-600 to-violet-600 rounded-2xl shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 transition-all"
             >
               Get Started
             </Link>

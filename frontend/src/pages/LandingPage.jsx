@@ -252,7 +252,7 @@ const LandingPage = () => {
             <div className={`transition-all duration-1000 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.05] border border-white/10 text-purple-300 font-medium text-sm mb-6">
                 <ShieldIcon />
-                <span className="ml-2">HIPAA Compliant • FDA Registered • SOC 2 Certified</span>
+                <span className="ml-2">Designed with HIPAA, GDPR, and healthcare security standards in mind</span>
               </div>
               
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
@@ -274,8 +274,7 @@ const LandingPage = () => {
               </h1>
               
               <p className="text-xl text-gray-400 mb-8 max-w-xl leading-relaxed">
-                Empowering patients, supporting families, and assisting medical professionals 
-                with our advanced AI assistant system designed specifically for Alzheimer's care.
+              Empowering patients, supporting families, and assisting healthcare professionals through an advanced AI-powered care system designed specifically for Alzheimer’s patients.
               </p>
               
               <div className="flex flex-wrap gap-4 mb-12">

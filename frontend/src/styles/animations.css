@@ -2,6 +2,24 @@
 
 /* ===== Keyframe Animations ===== */
 
+/* Pulse Border Animation for Dashboard Switch */
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: rgba(168, 85, 247, 0.3);
+    box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.2);
+  }
+  50% {
+    border-color: rgba(168, 85, 247, 0.6);
+    box-shadow: 0 0 20px 4px rgba(168, 85, 247, 0.3);
+  }
+}
+
+.animate-pulse-border {
+  animation: pulse-border 2s ease-in-out infinite;
+  border: 2px solid transparent;
+  border-radius: inherit;
+}
+
 /* Fade Animations */
 @keyframes fadeIn {
   from { opacity: 0; }

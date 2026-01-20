@@ -67,7 +67,6 @@ const ArrowRightIcon = () => (
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [dashboardOpen, setDashboardOpen] = useState(false);
   const [activeIndicator, setActiveIndicator] = useState({ left: 0, width: 0 });
   const navRef = useRef(null);
   const location = useLocation();
@@ -83,7 +82,6 @@ const Navbar = () => {
   // Close mobile menu on route change
   useEffect(() => {
     setIsOpen(false);
-    setDashboardOpen(false);
   }, [location]);
 
   // Update active indicator position
@@ -105,35 +103,17 @@ const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'Features', path: '/features' },
     { name: 'About', path: '/about' },
-  ];
-
-  const dashboardItems = [
-    { 
-      name: 'Family Dashboard', 
-      path: '/family-dashboard', 
-      description: 'Monitor and support your loved ones',
-      icon: FamilyIcon,
-      color: 'from-pink-500 to-rose-500'
-    },
-    { 
-      name: 'Doctor Dashboard', 
-      path: '/doctor-dashboard', 
-      description: 'Clinical insights & patient analytics',
-      icon: DoctorIcon,
-      color: 'from-blue-500 to-cyan-500'
-    },
+    { name: 'Dashboard', path: '/dashboard' },
   ];
 
   const isActive = (path) => location.pathname === path;
-  const isDashboardActive = dashboardItems.some(item => location.pathname === item.path);
 
   // Menu items for StaggeredMenu
   const menuItems = [
     { label: 'Home', link: '/' },
     { label: 'Features', link: '/features' },
     { label: 'About', link: '/about' },
-    { label: 'Family', link: '/family-dashboard' },
-    { label: 'Doctor', link: '/doctor-dashboard' },
+    { label: 'Dashboard', link: '/dashboard' },
   ];
 
   const socialItems = [
@@ -174,6 +154,13 @@ const Navbar = () => {
                     </span>
                   </div>
                 </div>
+                {/* Mobile: Show name */}
+                <div className="sm:hidden">
+                  <h1 className="text-lg font-bold bg-gradient-to-r from-white via-purple-200 to-purple-300 bg-clip-text text-transparent">
+                    ALZCare.eg
+                  </h1>
+                </div>
+                {/* Desktop: Show name + tagline */}
                 <div className="hidden sm:block">
                   <h1 className="text-xl font-bold bg-gradient-to-r from-white via-purple-200 to-purple-300 bg-clip-text text-transparent">
                     ALZCare.eg
@@ -210,22 +197,6 @@ const Navbar = () => {
                       {item.name}
                     </Link>
                   ))}
-                  
-                  {/* Dashboard Dropdown Trigger */}
-                  <div className="relative">
-                    <button
-                      onClick={() => setDashboardOpen(!dashboardOpen)}
-                      onMouseEnter={() => setDashboardOpen(true)}
-                      className={`relative flex items-center gap-1.5 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                        isDashboardActive || dashboardOpen
-                          ? 'text-purple-300'
-                          : 'text-gray-400 hover:text-white'
-                      }`}
-                    >
-                      Dashboards
-                      <ChevronDownIcon className={`h-3.5 w-3.5 transition-transform duration-300 ${dashboardOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                  </div>
                 </div>
               </div>
 
@@ -261,70 +232,7 @@ const Navbar = () => {
           </div>
         </nav>
 
-        {/* Dashboard Mega Dropdown */}
-        <div 
-          className={`hidden lg:block absolute left-1/2 -translate-x-1/2 mt-3 transition-all duration-300 ${
-            dashboardOpen 
-              ? 'opacity-100 visible translate-y-0' 
-              : 'opacity-0 invisible -translate-y-4 pointer-events-none'
-          }`}
-          onMouseEnter={() => setDashboardOpen(true)}
-          onMouseLeave={() => setDashboardOpen(false)}
-        >
-          <div className="bg-[#0d0520]/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_60px_rgba(124,58,237,0.3)] border border-purple-500/20 p-2 min-w-[420px]">
-            {/* Arrow */}
-            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#0d0520] border-l border-t border-purple-500/20 rotate-45" />
-            
-            <div className="relative grid gap-1">
-              {dashboardItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    onClick={() => setDashboardOpen(false)}
-                    className={`group flex items-center gap-4 p-4 rounded-xl transition-all duration-300 ${
-                      isActive(item.path) 
-                        ? 'bg-purple-500/10' 
-                        : 'hover:bg-white/[0.03]'
-                    }`}
-                  >
-                    {/* Icon */}
-                    <div className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform duration-300`}>
-                      <Icon />
-                    </div>
-                    
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className={`font-semibold ${isActive(item.path) ? 'text-purple-300' : 'text-white'}`}>
-                          {item.name}
-                        </span>
-                        <ArrowRightIcon />
-                      </div>
-                      <p className="text-sm text-gray-400 mt-0.5">{item.description}</p>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-            
-            {/* Footer */}
-            <div className="mt-2 pt-2 border-t border-white/[0.05]">
-              <div className="flex items-center justify-between px-4 py-2">
-                <span className="text-xs text-gray-500">Need help choosing?</span>
-                <Link 
-                  to="/about" 
-                  onClick={() => setDashboardOpen(false)}
-                  className="text-xs font-medium text-purple-400 hover:text-purple-300 transition-colors"
-                >
-                  Learn more →
-                </Link>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
 
       {/* Staggered Mobile Menu */}
       <div className="lg:hidden">
