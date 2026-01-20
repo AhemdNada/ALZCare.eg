@@ -744,9 +744,7 @@ const FeaturesPage = () => {
                     Multi-Agent System
                   </div>
                   
-                  <div className="absolute top-1/2 -right-4 -translate-y-1/2 px-4 py-2 bg-[#0a0118] text-purple-300 text-xs font-medium rounded-full shadow-xl border border-purple-500/30">
-                    Distributed Processing
-                  </div>
+                  
                 </div>
 
                 {/* Stats row */}

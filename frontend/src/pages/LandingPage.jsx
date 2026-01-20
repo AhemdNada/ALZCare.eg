@@ -255,13 +255,13 @@ const LandingPage = () => {
                 <span className="ml-2">Designed with HIPAA, GDPR, and healthcare security standards in mind</span>
               </div>
               
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
-                Compassionate AI for{' '}
-                <span className="relative">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
+                <span className="whitespace-nowrap">Compassionate AI for</span>{' '}
+                <span className="relative whitespace-nowrap">
                   <span className="bg-gradient-to-r from-purple-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
                     Alzheimer's Care
                   </span>
-                  <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 200 8" fill="none">
+                  <svg className="absolute -bottom-2 left-0 w-full hidden sm:block" height="8" viewBox="0 0 200 8" fill="none">
                     <path d="M1 5.5C47.6667 2.16667 141 -2.4 199 5.5" stroke="url(#paint0_linear)" strokeWidth="3" strokeLinecap="round"/>
                     <defs>
                       <linearGradient id="paint0_linear" x1="1" y1="6" x2="199" y2="6">
@@ -277,15 +277,15 @@ const LandingPage = () => {
               Empowering patients, supporting families, and assisting healthcare professionals through an advanced AI-powered care system designed specifically for Alzheimer’s patients.
               </p>
               
-              <div className="flex flex-wrap gap-4 mb-12">
+              <div className="flex gap-3 sm:gap-4 mb-12">
                 <Link
                   to="/auth/signup"
-                  className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-violet-600 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 transition-all duration-300 hover:-translate-y-1 flex items-center gap-2"
+                  className="group px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-600 to-violet-600 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 transition-all duration-300 hover:-translate-y-1 flex items-center gap-2 text-sm sm:text-base"
                 >
                   <span>Request Demo</span>
                   <ChevronRightIcon />
                 </Link>
-                <button className="group px-8 py-4 border-2 border-white/10 text-white font-semibold rounded-xl hover:bg-white/[0.05] hover:border-purple-500/30 transition-all duration-300 flex items-center gap-2">
+                <button className="group px-4 sm:px-8 py-3 sm:py-4 border-2 border-white/10 text-white font-semibold rounded-xl hover:bg-white/[0.05] hover:border-purple-500/30 transition-all duration-300 flex items-center gap-2 text-sm sm:text-base">
                   <PlayCircleIcon />
                   <span>Watch Video</span>
                 </button>
@@ -304,79 +304,18 @@ const LandingPage = () => {
               </div>
             </div>
 
-            {/* Hero Visual */}
+            {/* Hero Visual - Animated SVG */}
             <div className={`relative transition-all duration-1000 delay-300 ${heroVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-              <div className="relative">
-                {/* Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/30 to-violet-600/30 rounded-3xl blur-2xl scale-105" />
+              <div className="relative flex items-center justify-center">
+                {/* Subtle Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-violet-600/20 rounded-full blur-3xl scale-75" />
                 
-                {/* Main Card */}
-                <div className="relative bg-white/[0.03] backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/[0.08]">
-                  <div className="absolute -top-4 -right-4 px-6 py-2 bg-gradient-to-r from-purple-600 to-violet-600 text-white text-sm font-medium rounded-full shadow-lg shadow-purple-500/30 flex items-center gap-2">
-                    <span className="h-2 w-2 bg-green-400 rounded-full animate-pulse" />
-                    AI Assistant Active
-                  </div>
-                  
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-purple-500/30">
-                      <BrainIcon />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white">Hello, I'm ALZCare.eg</h3>
-                      <p className="text-gray-400">How can I assist you today?</p>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-white/[0.03] rounded-2xl p-6 mb-6 border border-white/[0.05]">
-                    <div className="grid grid-cols-2 gap-4">
-                      {[
-                        { icon: UsersIcon, label: 'Family Call', desc: 'Connect now' },
-                        { icon: ClockIcon, label: 'Medication', desc: 'In 30 min' },
-                        { icon: BellIcon, label: 'Reminders', desc: '3 today' },
-                        { icon: HeartIcon, label: 'Wellness', desc: 'Good' },
-                      ].map((item, i) => (
-                        <button key={i} className="p-4 bg-white/[0.03] border border-white/[0.05] rounded-xl hover:bg-white/[0.06] hover:border-purple-500/30 transition-all duration-300 hover:-translate-y-0.5 text-center group">
-                          <div className="h-10 w-10 mx-auto mb-2 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-                            <item.icon />
-                          </div>
-                          <span className="text-sm font-medium text-white block">{item.label}</span>
-                          <span className="text-xs text-gray-500">{item.desc}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 bg-green-500/10 rounded-xl border border-green-500/20">
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
-                        <CheckCircleIcon />
-                      </div>
-                      <div>
-                        <p className="font-medium text-white">All Systems Normal</p>
-                        <p className="text-sm text-gray-500">Last checked 2 min ago</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Floating Elements */}
-                <div className="absolute -left-6 top-1/4 p-4 bg-[#0d0520]/90 backdrop-blur-xl rounded-xl shadow-lg border border-white/[0.08] animate-float">
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                      <HeartIcon className="h-4 w-4 text-purple-400" />
-                    </div>
-                    <span className="text-sm font-medium text-white">72 BPM</span>
-                  </div>
-                </div>
-                
-                <div className="absolute -right-6 bottom-1/4 p-4 bg-[#0d0520]/90 backdrop-blur-xl rounded-xl shadow-lg border border-white/[0.08] animate-float animation-delay-1000">
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-lg bg-green-500/20 flex items-center justify-center">
-                      <MapPinIcon className="h-4 w-4 text-green-400" />
-                    </div>
-                    <span className="text-sm font-medium text-white">Living Room</span>
-                  </div>
-                </div>
+                {/* Animated SVG */}
+                <img 
+                  src="/alzheimer-animate.svg" 
+                  alt="Alzheimer's Care Animation" 
+                  className="relative w-full max-w-lg lg:max-w-xl h-auto"
+                />
               </div>
             </div>
           </div>
@@ -399,48 +338,62 @@ const LandingPage = () => {
       </section>
 
       {/* ===== FEATURES SECTION ===== */}
-      <section ref={featuresRef} className="py-24 bg-[#0a0118]">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className={`text-center mb-16 transition-all duration-700 ${featuresVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <span className="inline-block px-4 py-2 bg-purple-500/10 border border-purple-500/20 text-purple-400 font-medium text-sm rounded-full mb-4">
-              Comprehensive Care
+      <section ref={featuresRef} className="py-24 bg-[#0a0118] relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl" />
+        
+        <div className="max-w-7xl mx-auto px-4 relative">
+          <div className={`text-center mb-20 transition-all duration-700 ${featuresVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500/20 to-violet-500/20 border border-purple-500/30 text-purple-300 font-medium text-sm rounded-full mb-6">
+              <BrainIcon className="h-4 w-4" />
+              Comprehensive Care Platform
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
               Everything You Need for{' '}
-              <span className="bg-gradient-to-r from-purple-400 to-violet-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-violet-400 bg-clip-text text-transparent">
                 Alzheimer's Care
               </span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Our AI system provides holistic support covering all aspects of Alzheimer's management
+            <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              Our AI system provides holistic support covering all aspects of Alzheimer's management, 
+              from daily care to emergency response.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className={`group bg-white/[0.03] rounded-2xl p-8 border border-white/[0.05] hover:bg-white/[0.06] hover:border-purple-500/30 transition-all duration-500 hover:-translate-y-2 ${
+                className={`group relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl p-8 border border-white/[0.08] hover:border-purple-500/40 transition-all duration-500 hover:-translate-y-2 overflow-hidden ${
                   featuresVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <div className={`h-16 w-16 rounded-2xl bg-gradient-to-br ${feature.gradient} p-4 text-white mb-6 shadow-lg shadow-purple-500/20 group-hover:scale-110 transition-transform duration-300`}>
-                  <feature.icon />
+                {/* Hover glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-violet-600/0 group-hover:from-purple-600/10 group-hover:to-violet-600/5 transition-all duration-500" />
+                
+                <div className="relative">
+                  <div className={`h-14 w-14 rounded-xl bg-gradient-to-br ${feature.gradient} p-3.5 text-white mb-6 shadow-lg shadow-purple-500/25 group-hover:scale-110 group-hover:shadow-purple-500/40 transition-all duration-300`}>
+                    <feature.icon />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-200 transition-colors">{feature.title}</h3>
+                  <p className="text-gray-400 leading-relaxed">{feature.description}</p>
+                  
+                  {/* Bottom accent line */}
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-500/0 via-purple-500/50 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
-                <p className="text-gray-400 leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-16">
             <Link
               to="/features"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-violet-600 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 transition-all duration-300 hover:-translate-y-1"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-violet-600 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:-translate-y-1 group"
             >
-              Explore All Features
-              <ChevronRightIcon />
+              <span>Explore All Features</span>
+              <ChevronRightIcon className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
@@ -535,19 +488,19 @@ const LandingPage = () => {
               <span className="text-white font-medium"> gives voice to those who are fading away.</span>
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex justify-center gap-3 sm:gap-4">
               <Link
                 to="/about"
-                className="px-8 py-4 bg-white text-gray-900 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center gap-2"
+                className="px-4 sm:px-8 py-3 sm:py-4 bg-white text-gray-900 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center gap-2 text-sm sm:text-base"
               >
-                Learn Our Mission
+                <span>Learn Our Mission</span>
                 <ChevronRightIcon />
               </Link>
               <Link
                 to="/auth/signup"
-                className="px-8 py-4 border-2 border-purple-400/50 text-white font-semibold rounded-xl hover:bg-purple-500/20 transition-all duration-300 flex items-center gap-2"
+                className="px-4 sm:px-8 py-3 sm:py-4 border-2 border-purple-400/50 text-white font-semibold rounded-xl hover:bg-purple-500/20 transition-all duration-300 flex items-center gap-2 text-sm sm:text-base"
               >
-                Join the Movement
+                <span>Join the Movement</span>
               </Link>
             </div>
           </div>
