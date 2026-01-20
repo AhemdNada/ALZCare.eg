@@ -1,6 +1,63 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
+// ===== FONTAWESOME ICONS (SVG) =====
+const FAMicrophoneIcon = () => (
+  <svg className="h-7 w-7" viewBox="0 0 384 512" fill="currentColor">
+    <path d="M192 0C139 0 96 43 96 96V256c0 53 43 96 96 96s96-43 96-96V96c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24v40c0 89.1 66.2 162.7 152 174.4V464H120c-13.3 0-24 10.7-24 24s10.7 24 24 24h72 72c13.3 0 24-10.7 24-24s-10.7-24-24-24H216V430.4c85.8-11.7 152-85.3 152-174.4V216c0-13.3-10.7-24-24-24s-24 10.7-24 24v40c0 70.7-57.3 128-128 128s-128-57.3-128-128V216z"/>
+  </svg>
+);
+
+const FABoltIcon = () => (
+  <svg className="h-7 w-7" viewBox="0 0 448 512" fill="currentColor">
+    <path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z"/>
+  </svg>
+);
+
+const FARobotIcon = () => (
+  <svg className="h-7 w-7" viewBox="0 0 640 512" fill="currentColor">
+    <path d="M320 0c17.7 0 32 14.3 32 32V96H472c39.8 0 72 32.2 72 72V440c0 39.8-32.2 72-72 72H168c-39.8 0-72-32.2-72-72V168c0-39.8 32.2-72 72-72H288V32c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H208zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H304zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H400zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224H64V416H48c-26.5 0-48-21.5-48-48V272c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H576V224h16z"/>
+  </svg>
+);
+
+const FAVolumeHighIcon = () => (
+  <svg className="h-7 w-7" viewBox="0 0 640 512" fill="currentColor">
+    <path d="M533.6 32.5C598.5 85.2 640 165.8 640 256s-41.5 170.7-106.4 223.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C557.5 398.2 592 331.8 592 256s-34.5-142.2-88.7-186.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM473.1 107c43.2 35.2 70.9 88.9 70.9 149s-27.7 113.8-70.9 149c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C475.3 341.3 496 301.1 496 256s-20.7-85.3-53.2-111.8c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM256 64c0-12.6-7.4-24-18.9-29.2s-25-3.1-34.4 5.3L131.8 96H64c-35.3 0-64 28.7-64 64v192c0 35.3 28.7 64 64 64h67.8l70.9 56c9.4 8.4 22.9 10.4 34.4 5.3S256 460.6 256 448V64z"/>
+  </svg>
+);
+
+const FAUsersGearIcon = () => (
+  <svg className="h-6 w-6" viewBox="0 0 640 512" fill="currentColor">
+    <path d="M144 160A80 80 0 1 0 144 0a80 80 0 1 0 0 160zm368 0A80 80 0 1 0 512 0a80 80 0 1 0 0 160zM0 298.7C0 310.4 9.6 320 21.3 320H234.7c.2 0 .4 0 .7 0c-26.6-23.5-43.3-57.8-43.3-96c0-7.6 .7-15 1.9-22.3c-13.6-6.3-28.7-9.7-44.6-9.7H106.7C47.8 192 0 239.8 0 298.7zM405.3 320H618.7c11.8 0 21.3-9.6 21.3-21.3C640 239.8 592.2 192 533.3 192H490.7c-15.9 0-31 3.5-44.6 9.7c1.3 7.2 1.9 14.7 1.9 22.3c0 38.2-16.8 72.5-43.3 96c.2 0 .4 0 .7 0zM320 176c-48.6 0-88 39.4-88 88s39.4 88 88 88s88-39.4 88-88s-39.4-88-88-88zM96 416c0-35.3 28.7-64 64-64H480c35.3 0 64 28.7 64 64v32c0 17.7-14.3 32-32 32H128c-17.7 0-32-14.3-32-32V416z"/>
+  </svg>
+);
+
+const FABullseyeIcon = () => (
+  <svg className="h-6 w-6" viewBox="0 0 512 512" fill="currentColor">
+    <path d="M448 256A192 192 0 1 0 64 256a192 192 0 1 0 384 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 80a80 80 0 1 0 0-160 80 80 0 1 0 0 160zm0-224a144 144 0 1 1 0 288 144 144 0 1 1 0-288zM224 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/>
+  </svg>
+);
+
+const FAGlobeIcon = () => (
+  <svg className="h-6 w-6" viewBox="0 0 512 512" fill="currentColor">
+    <path d="M352 256c0 22.2-1.2 43.6-3.3 64H163.3c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64H348.7c2.2 20.4 3.3 41.8 3.3 64zm28.8-64H503.9c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64H380.8c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32H376.7c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 171.9 151.6zm-149.1 0H167.7c6.1-36.4 15.5-68.6 27-94.7c10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.6 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5c11.6 26 20.9 58.2 27 94.7zm-209 0H18.6C48.6 85.9 112.2 29.1 190.6 8.4C165.1 42.6 145.3 96.1 135.3 160zM8.1 192H131.2c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64H8.1C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zM194.7 446.6c-11.6-26-20.9-58.2-27-94.6H344.3c-6.1 36.4-15.5 68.6-27 94.6c-10.5 23.6-22.2 40.7-33.5 51.5C272.6 508.8 263.4 512 256 512s-16.6-3.2-27.8-13.8c-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6C112.2 482.9 48.6 426.1 18.6 352H135.3zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6c25.5-34.2 45.2-87.7 55.3-151.6H493.4z"/>
+  </svg>
+);
+
+// FontAwesome icon renderer
+const getFAIcon = (iconName) => {
+  switch(iconName) {
+    case 'microphone': return <FAMicrophoneIcon />;
+    case 'bolt': return <FABoltIcon />;
+    case 'robot': return <FARobotIcon />;
+    case 'volume-high': return <FAVolumeHighIcon />;
+    case 'users-gear': return <FAUsersGearIcon />;
+    case 'bullseye': return <FABullseyeIcon />;
+    case 'globe': return <FAGlobeIcon />;
+    default: return null;
+  }
+};
+
 // ===== ICONS =====
 const UserIcon = () => (
   <svg className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -412,25 +469,25 @@ const FeaturesPage = () => {
       step: 1,
       title: "Patient Speaks",
       description: "The patient asks a question or makes a request using natural voice commands.",
-      icon: "🎙️"
+      icon: "microphone"
     },
     {
       step: 2,
       title: "Workflow Triggered",
       description: "The request is sent to our intelligent workflow orchestration system.",
-      icon: "⚡"
+      icon: "bolt"
     },
     {
       step: 3,
       title: "Multi-Agent Processing",
       description: "Specialized AI agents collaborate to analyze, understand, and process the request.",
-      icon: "🤖"
+      icon: "robot"
     },
     {
       step: 4,
       title: "Voice Response",
       description: "A personalized, compassionate response is delivered back to the patient via voice.",
-      icon: "🔊"
+      icon: "volume-high"
     }
   ];
 
@@ -641,8 +698,8 @@ const FeaturesPage = () => {
                             <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl blur-md opacity-50 group-hover:opacity-80 transition-opacity" />
                             
                             {/* Icon container */}
-                            <div className="relative h-16 w-16 bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                              <span className="text-3xl filter drop-shadow-lg">{item.icon}</span>
+                            <div className="relative h-16 w-16 bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 text-white">
+                              {getFAIcon(item.icon)}
                             </div>
                             
                             {/* Step number */}
@@ -687,8 +744,8 @@ const FeaturesPage = () => {
                   }`}
                   style={{ transitionDelay: '1100ms' }}
                 >
-                  <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center shadow-lg shadow-green-500/25">
-                    <span className="text-xl">⚡</span>
+                  <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center shadow-lg shadow-green-500/25 text-white">
+                    {getFAIcon('bolt')}
                   </div>
                   <div>
                     <div className="text-2xl font-bold text-white">&lt; 100ms</div>
@@ -740,7 +797,7 @@ const FeaturesPage = () => {
                   </div>
                   
                   <div className="absolute -bottom-4 -left-4 px-5 py-2.5 bg-[#0a0118] text-white text-sm font-semibold rounded-full shadow-xl border border-purple-500/30 flex items-center gap-2">
-                    <span className="text-lg">🤖</span>
+                    <span className="text-purple-400">{getFAIcon('robot')}</span>
                     Multi-Agent System
                   </div>
                   
@@ -755,15 +812,15 @@ const FeaturesPage = () => {
                   style={{ transitionDelay: '800ms' }}
                 >
                   {[
-                    { value: '5+', label: 'AI Agents', icon: '🤖' },
-                    { value: '99.9%', label: 'Accuracy', icon: '🎯' },
-                    { value: '24/7', label: 'Available', icon: '🌐' },
+                    { value: '5+', label: 'AI Agents', icon: 'users-gear' },
+                    { value: '99.9%', label: 'Accuracy', icon: 'bullseye' },
+                    { value: '24/7', label: 'Available', icon: 'globe' },
                   ].map((stat, i) => (
                     <div 
                       key={i}
                       className="relative group p-4 rounded-2xl bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.06] hover:border-purple-500/30 transition-all duration-300 text-center"
                     >
-                      <div className="text-2xl mb-2">{stat.icon}</div>
+                      <div className="text-purple-400 mb-2 flex justify-center">{getFAIcon(stat.icon)}</div>
                       <div className="text-2xl font-bold text-white">{stat.value}</div>
                       <div className="text-xs text-gray-500">{stat.label}</div>
                     </div>
