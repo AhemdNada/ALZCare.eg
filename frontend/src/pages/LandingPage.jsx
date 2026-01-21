@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 // Lazy load DomeGallery for better initial page load
 const DomeGallery = lazy(() => import('../components/DomeGallery'));
@@ -173,6 +175,35 @@ const LandingPage = () => {
   const [statsRef, statsVisible] = useScrollReveal();
   const [ctaRef, ctaVisible] = useScrollReveal();
 
+  // Initialize AOS
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: false,
+      mirror: false, // Only animate when scrolling down into view
+      offset: 50,
+      disable: false,
+    });
+    
+    // Refresh AOS on window resize
+    window.addEventListener('resize', AOS.refresh);
+    return () => window.removeEventListener('resize', AOS.refresh);
+  }, []);
+
+  // Dynamic AOS animations for features - alternating directions
+  const getFeatureAnimation = (index) => {
+    const animations = [
+      { aos: 'fade-right', delay: 0 },      // Card 1 - from left
+      { aos: 'fade-up', delay: 100 },        // Card 2 - from bottom
+      { aos: 'fade-left', delay: 200 },      // Card 3 - from right
+      { aos: 'fade-left', delay: 0 },        // Card 4 - from right
+      { aos: 'fade-up', delay: 100 },        // Card 5 - from bottom
+      { aos: 'fade-right', delay: 200 },     // Card 6 - from left
+    ];
+    return animations[index] || { aos: 'fade-up', delay: 0 };
+  };
+
   const features = [
     {
       icon: BrainIcon,
@@ -329,50 +360,78 @@ const LandingPage = () => {
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl" />
         
         <div className="max-w-7xl mx-auto px-4 relative">
-          <div className={`text-center mb-20 transition-all duration-700 ${featuresVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500/20 to-violet-500/20 border border-purple-500/30 text-purple-300 font-medium text-sm rounded-full mb-6">
+          {/* Section Header with AOS */}
+          <div className="text-center mb-20">
+            <span 
+              data-aos="fade-down"
+              data-aos-duration="600"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500/20 to-violet-500/20 border border-purple-500/30 text-purple-300 font-medium text-sm rounded-full mb-6"
+            >
               <BrainIcon className="h-4 w-4" />
               Comprehensive Care Platform
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 
+              data-aos="fade-up"
+              data-aos-duration="800"
+              data-aos-delay="100"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6"
+            >
               Everything You Need for{' '}
               <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-violet-400 bg-clip-text text-transparent">
                 Alzheimer's Care
               </span>
             </h2>
-            <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p 
+              data-aos="fade-up"
+              data-aos-duration="800"
+              data-aos-delay="200"
+              className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
+            >
               Our AI system provides holistic support covering all aspects of Alzheimer's management, 
               from daily care to emergency response.
             </p>
           </div>
 
+          {/* Features Grid with Dynamic AOS Animations */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className={`group relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl p-8 border border-white/[0.08] hover:border-purple-500/40 transition-all duration-500 hover:-translate-y-2 overflow-hidden ${
-                  featuresVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                {/* Hover glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-violet-600/0 group-hover:from-purple-600/10 group-hover:to-violet-600/5 transition-all duration-500" />
-                
-                <div className="relative">
-                  <div className={`h-14 w-14 rounded-xl bg-gradient-to-br ${feature.gradient} p-3.5 text-white mb-6 shadow-lg shadow-purple-500/25 group-hover:scale-110 group-hover:shadow-purple-500/40 transition-all duration-300`}>
-                    <feature.icon />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-200 transition-colors">{feature.title}</h3>
-                  <p className="text-gray-400 leading-relaxed">{feature.description}</p>
+            {features.map((feature, index) => {
+              const animation = getFeatureAnimation(index);
+              return (
+                <div
+                  key={index}
+                  data-aos={animation.aos}
+                  data-aos-duration="800"
+                  data-aos-delay={animation.delay}
+                  data-aos-anchor-placement="top-bottom"
+                  className="group relative bg-gradient-to-br from-white/[0.05] to-white/[0.02] rounded-2xl p-8 border border-white/[0.08] hover:border-purple-500/40 transition-all duration-500 hover:-translate-y-2 overflow-hidden"
+                >
+                  {/* Hover glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-violet-600/0 group-hover:from-purple-600/10 group-hover:to-violet-600/5 transition-all duration-500" />
                   
-                  {/* Bottom accent line */}
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-500/0 via-purple-500/50 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative">
+                    <div 
+                      className={`h-14 w-14 rounded-xl bg-gradient-to-br ${feature.gradient} p-3.5 text-white mb-6 shadow-lg shadow-purple-500/25 group-hover:scale-110 group-hover:shadow-purple-500/40 transition-all duration-300`}
+                    >
+                      <feature.icon />
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-200 transition-colors">{feature.title}</h3>
+                    <p className="text-gray-400 leading-relaxed">{feature.description}</p>
+                    
+                    {/* Bottom accent line */}
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-500/0 via-purple-500/50 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
-          <div className="text-center mt-16">
+          {/* CTA Button with AOS */}
+          <div 
+            data-aos="zoom-in"
+            data-aos-duration="600"
+            data-aos-delay="400"
+            className="text-center mt-16"
+          >
             <Link
               to="/features"
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-violet-600 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:-translate-y-1 group"

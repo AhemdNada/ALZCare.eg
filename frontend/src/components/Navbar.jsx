@@ -64,12 +64,24 @@ const ArrowRightIcon = () => (
   </svg>
 );
 
-const Navbar = memo(() => {
+const Navbar = memo(({ isExpanded = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeIndicator, setActiveIndicator] = useState({ left: 0, width: 0 });
+  const [navExpanded, setNavExpanded] = useState(false);
   const navRef = useRef(null);
   const location = useLocation();
+
+  // Trigger expansion animation when isExpanded prop changes
+  useEffect(() => {
+    if (isExpanded) {
+      // Small delay to ensure the initial narrow state is rendered first
+      const timer = setTimeout(() => {
+        setNavExpanded(true);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isExpanded]);
 
   // Memoized scroll handler
   const handleScroll = useCallback(() => {
@@ -138,7 +150,9 @@ const Navbar = memo(() => {
     <>
       <header className={`fixed top-0 left-0 right-0 px-4 sm:px-6 lg:px-8 pt-4 ${isOpen ? 'z-[9998]' : 'z-[9999]'}`}>
         <nav 
-          className={`max-w-7xl mx-auto transition-all duration-500 rounded-2xl ${
+          className={`mx-auto transition-all rounded-2xl ${
+            navExpanded ? 'max-w-7xl duration-700 ease-out' : 'max-w-md duration-0'
+          } ${
             scrolled 
               ? 'bg-[#0d0520]/95 shadow-[0_8px_40px_rgba(124,58,237,0.25)] border border-purple-500/20' 
               : 'bg-[#0d0520]/80 shadow-[0_4px_24px_rgba(124,58,237,0.15)] border border-white/5'
@@ -146,11 +160,16 @@ const Navbar = memo(() => {
           style={{
             backdropFilter: 'blur(24px)',
             WebkitBackdropFilter: 'blur(24px)',
+            transform: navExpanded ? 'scale(1)' : 'scale(0.95)',
+            opacity: navExpanded ? 1 : 0.9,
+            transition: navExpanded 
+              ? 'max-width 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease-out, background-color 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease'
+              : 'none',
           }}
           role="navigation"
           aria-label="Main navigation"
         >
-          <div className="px-6 lg:px-8">
+          <div className={`px-6 lg:px-8 transition-all duration-700 ${navExpanded ? 'opacity-100' : 'opacity-0'}`}>
             <div className="flex justify-between items-center h-[72px]">
               
               {/* Logo */}

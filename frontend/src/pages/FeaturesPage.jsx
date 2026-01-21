@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 // ===== FONTAWESOME ICONS (SVG) =====
 const FAMicrophoneIcon = () => (
@@ -179,12 +181,16 @@ const useScrollReveal = () => {
 };
 
 // ===== TIMELINE FEATURE ITEM =====
-const TimelineFeatureItem = ({ feature, index, isVisible, isLeft, isActive }) => {
+const TimelineFeatureItem = ({ feature, index, isLeft, isActive }) => {
   const [isHovered, setIsHovered] = useState(false);
   const itemRef = useRef(null);
   
   // Combine hover and scroll-active states
   const isHighlighted = isHovered || isActive;
+
+  // AOS animation based on position (left items come from left, right items come from right)
+  const aosAnimation = isLeft ? 'fade-right' : 'fade-left';
+  const aosDelay = (index % 3) * 100; // Stagger within each row
   
   return (
     <div 
@@ -194,14 +200,12 @@ const TimelineFeatureItem = ({ feature, index, isVisible, isLeft, isActive }) =>
     >
       {/* Content Card */}
       <div 
-        className={`lg:w-[calc(50%-40px)] w-full transition-all duration-700 ${
-          isVisible 
-            ? 'opacity-100 translate-x-0' 
-            : isLeft 
-              ? 'opacity-0 -translate-x-20' 
-              : 'opacity-0 translate-x-20'
-        }`}
-        style={{ transitionDelay: `${index * 150}ms` }}
+        data-aos={aosAnimation}
+        data-aos-duration="800"
+        data-aos-delay={aosDelay}
+        data-aos-anchor-placement="top-bottom"
+        data-aos-offset="100"
+        className="lg:w-[calc(50%-40px)] w-full"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -270,10 +274,10 @@ const TimelineFeatureItem = ({ feature, index, isVisible, isLeft, isActive }) =>
 
       {/* Center Node */}
       <div 
-        className={`hidden lg:flex absolute left-1/2 -translate-x-1/2 z-20 transition-all duration-500 ${
-          isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
-        }`}
-        style={{ transitionDelay: `${index * 150 + 100}ms` }}
+        data-aos="zoom-in"
+        data-aos-duration="500"
+        data-aos-delay={aosDelay + 100}
+        className="hidden lg:flex absolute left-1/2 -translate-x-1/2 z-20"
       >
         <div 
           className={`h-16 w-16 rounded-full bg-gradient-to-br ${feature.gradient} flex items-center justify-center shadow-lg shadow-purple-500/30 border-4 border-[#0a0118]
@@ -301,6 +305,22 @@ const FeaturesPage = () => {
   const [activeFeatureIndex, setActiveFeatureIndex] = useState(-1);
   const timelineContainerRef = useRef(null);
   const featureItemRefs = useRef([]);
+
+  // Initialize AOS
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: false,
+      mirror: false, // Only animate when scrolling down into view
+      offset: 50,
+      disable: false,
+    });
+    
+    // Refresh AOS on window resize
+    window.addEventListener('resize', AOS.refresh);
+    return () => window.removeEventListener('resize', AOS.refresh);
+  }, []);
 
   // Track scroll progress for timeline line fill AND active feature
   useEffect(() => {
@@ -566,14 +586,23 @@ const FeaturesPage = () => {
       </section>
 
       {/* Timeline Features Section */}
-      <section ref={timelineRef} className="py-24 px-4 relative">
+      <section ref={timelineRef} className="py-24 px-4 relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           {/* Section header */}
-          <div className={`text-center mb-20 transition-all duration-700 ${timelineVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <div className="text-center mb-20">
+            <h2 
+              data-aos="fade-down"
+              data-aos-duration="800"
+              className="text-4xl md:text-5xl font-bold text-white mb-6"
+            >
               Explore Our Features
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            <p 
+              data-aos="fade-up"
+              data-aos-duration="800"
+              data-aos-delay="100"
+              className="text-xl text-gray-400 max-w-2xl mx-auto"
+            >
               Scroll down to discover how each feature works together to provide complete care
             </p>
           </div>
@@ -607,7 +636,6 @@ const FeaturesPage = () => {
                   key={feature.id}
                   feature={feature}
                   index={index}
-                  isVisible={timelineVisible}
                   isLeft={index % 2 === 0}
                   isActive={activeFeatureIndex === index}
                 />

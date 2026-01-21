@@ -13,6 +13,15 @@ const DashboardShowcase = lazy(() => import('./pages/DashboardShowcase.jsx'));
 const AuthPages = lazy(() => import('./pages/AuthPages.jsx'));
 const AboutPage = lazy(() => import('./pages/AboutPage.jsx'));
 
+// ===== PAGE LOADING PLACEHOLDER =====
+// Shows a minimal loading state that takes up space to prevent footer flash
+const PageLoadingPlaceholder = memo(() => (
+  <div className="min-h-screen bg-[#0a0118] flex items-center justify-center">
+    <div className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
+  </div>
+));
+PageLoadingPlaceholder.displayName = 'PageLoadingPlaceholder';
+
 // ===== LOADING FALLBACK =====
 // TrueFocus animated loader - completes full animation before showing page
 const PageLoader = memo(({ onComplete }) => {
@@ -22,22 +31,29 @@ const PageLoader = memo(({ onComplete }) => {
   const totalWords = 2; // "ALZ" and "Care"
   
   useEffect(() => {
+    // Hide scrollbar during loading
+    document.body.style.overflow = 'hidden';
+    
     // Calculate total animation time: each word gets focused once, then we finish
     const totalTime = (animationDuration + pauseBetweenAnimations) * totalWords * 1000;
     
     const timer = setTimeout(() => {
       setAnimationComplete(true);
+      document.body.style.overflow = '';
       if (onComplete) onComplete();
     }, totalTime);
     
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = '';
+    };
   }, [onComplete]);
 
   if (animationComplete) return null;
 
   return (
     <div 
-      className="fixed inset-0 z-[10000] bg-[#0a0118] flex items-center justify-center"
+      className="fixed inset-0 z-[10000] bg-[#0a0118] flex items-center justify-center overflow-hidden"
       role="status"
       aria-label="Loading"
     >
@@ -60,12 +76,8 @@ const ScrollToTop = memo(() => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Use smooth scroll for better UX, with fallback
-    try {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    } catch {
-      window.scrollTo(0, 0);
-    }
+    // Scroll to top immediately on route change
+    window.scrollTo(0, 0);
   }, [pathname]);
 
   return null;
@@ -120,22 +132,21 @@ function App() {
       {/* Initial loading animation */}
       {isLoading && <PageLoader onComplete={handleLoadingComplete} />}
       
-      {/* Main app content - hidden during loading */}
+      {/* Main app content - completely hidden during loading to prevent scrollbar */}
+      {!isLoading && (
       <div 
-        className={`min-h-screen bg-[#0a0118] font-sans antialiased text-white flex flex-col transition-opacity duration-500 ${
-          isLoading ? 'opacity-0' : 'opacity-100'
-        }`}
+        className="min-h-screen bg-[#0a0118] font-sans antialiased text-white flex flex-col animate-fade-in"
       >
         {/* Utility components */}
         <ScrollToTop />
         <ScrollAnimationInitializer />
         
-        {/* Navigation */}
-        <Navbar />
+        {/* Navigation - isExpanded triggers the width animation after loader */}
+        <Navbar isExpanded={!isLoading} />
         
         {/* Main content area */}
         <main id="main-content" className="flex-1" role="main">
-          <Suspense fallback={null}>
+          <Suspense fallback={<PageLoadingPlaceholder />}>
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/features" element={<FeaturesPage />} />
@@ -151,6 +162,7 @@ function App() {
         {/* Footer */}
         <Footer />
       </div>
+      )}
     </Router>
   );
 }
