@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, createContext, useContext } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
+
+// Re-export icons for convenience
+export * from './Icons';
+
+// Re-export optimized AnimatedCounter
+export { default as AnimatedCounter } from './AnimatedCounter';
 
 // ===== BUTTON COMPONENT =====
 export const Button = ({ 

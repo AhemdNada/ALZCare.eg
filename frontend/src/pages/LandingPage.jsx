@@ -277,14 +277,14 @@ const LandingPage = () => {
               Empowering patients, supporting families, and assisting healthcare professionals through an advanced AI-powered care system designed specifically for Alzheimer’s patients.
               </p>
               
-              <div className="flex gap-3 sm:gap-4 mb-12">
-                
+              <div className="flex justify-start mb-12">
                 <Link
                   to="/dashboard"
-                  className="group px-4 sm:px-8 py-3 sm:py-4 border-2 border-white/10 text-white font-semibold rounded-xl hover:bg-white/[0.05] hover:border-purple-500/30 transition-all duration-300 flex items-center gap-2 text-sm sm:text-base"
+                  className="group w-full sm:w-auto px-6 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-purple-600 to-violet-600 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-3 text-base sm:text-lg"
                 >
                   <PlayCircleIcon />
                   <span>Explore Dashboards</span>
+                  <ChevronRightIcon className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
 

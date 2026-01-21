@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 // Icons
@@ -77,8 +77,9 @@ const InstagramIcon = () => (
   </svg>
 );
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
+const Footer = memo(() => {
+  // Memoize static data to prevent recreation on every render
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
 
   const quickLinks = [
     { name: 'Home', path: '/' },
@@ -103,15 +104,19 @@ const Footer = () => {
     { name: 'HIPAA Compliance', path: '#' },
   ];
 
-  const socialLinks = [
+  const socialLinks = useMemo(() => [
     { icon: FacebookIcon, href: '#', label: 'Facebook' },
     { icon: TwitterIcon, href: '#', label: 'Twitter' },
     { icon: LinkedinIcon, href: '#', label: 'LinkedIn' },
     { icon: InstagramIcon, href: '#', label: 'Instagram' },
-  ];
+  ], []);
 
   return (
-    <footer className="relative bg-[#0a0118] border-t border-purple-500/10 mt-auto">
+    <footer 
+      className="relative bg-[#0a0118] border-t border-purple-500/10 mt-auto"
+      role="contentinfo"
+      aria-label="Site footer"
+    >
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl" />
@@ -171,53 +176,55 @@ const Footer = () => {
               </p>
               
               {/* Social Links */}
-              <div className="flex space-x-3">
+              <nav aria-label="Social media links" className="flex space-x-3">
                 {socialLinks.map(({ icon: Icon, href, label }) => (
                   <a
                     key={label}
                     href={href}
-                    aria-label={label}
-                    className="h-11 w-11 rounded-xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-gray-400 hover:bg-purple-600 hover:text-white hover:border-purple-500 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-purple-500/20"
+                    aria-label={`Follow us on ${label}`}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    className="h-11 w-11 rounded-xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-gray-400 hover:bg-purple-600 hover:text-white hover:border-purple-500 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0a0118]"
                   >
                     <Icon />
                   </a>
                 ))}
-              </div>
+              </nav>
             </div>
 
             {/* Quick Links */}
-            <div>
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Quick Links</h3>
-              <ul className="space-y-3">
+            <nav aria-labelledby="footer-quick-links">
+              <h3 id="footer-quick-links" className="text-sm font-bold text-white uppercase tracking-wider mb-4">Quick Links</h3>
+              <ul className="space-y-3" role="list">
                 {quickLinks.map((item) => (
                   <li key={item.name}>
                     <Link
                       to={item.path}
-                      className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-sm"
+                      className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-sm focus:outline-none focus:text-purple-400"
                     >
                       {item.name}
                     </Link>
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
 
             {/* Resources */}
-            <div>
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Resources</h3>
-              <ul className="space-y-3">
+            <nav aria-labelledby="footer-resources">
+              <h3 id="footer-resources" className="text-sm font-bold text-white uppercase tracking-wider mb-4">Resources</h3>
+              <ul className="space-y-3" role="list">
                 {resources.map((item) => (
                   <li key={item.name}>
                     <a
                       href={item.path}
-                      className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-sm"
+                      className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-sm focus:outline-none focus:text-purple-400"
                     >
                       {item.name}
                     </a>
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
 
             {/* Contact & Trust */}
             <div>
@@ -280,6 +287,8 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = 'Footer';
 
 export default Footer;

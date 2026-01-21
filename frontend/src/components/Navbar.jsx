@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, memo, useCallback, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import StaggeredMenu from './StaggeredMenu';
 
@@ -64,20 +64,22 @@ const ArrowRightIcon = () => (
   </svg>
 );
 
-const Navbar = () => {
+const Navbar = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeIndicator, setActiveIndicator] = useState({ left: 0, width: 0 });
   const navRef = useRef(null);
   const location = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+  // Memoized scroll handler
+  const handleScroll = useCallback(() => {
+    setScrolled(window.scrollY > 20);
   }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -99,32 +101,42 @@ const Navbar = () => {
     }
   }, [location.pathname]);
 
-  const navItems = [
+  // Memoize static data
+  const navItems = useMemo(() => [
     { name: 'Home', path: '/' },
     { name: 'Features', path: '/features' },
     { name: 'About', path: '/about' },
     { name: 'Dashboard', path: '/dashboard' },
-  ];
+  ], []);
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = useCallback((path) => location.pathname === path, [location.pathname]);
 
   // Menu items for StaggeredMenu
-  const menuItems = [
+  const menuItems = useMemo(() => [
     { label: 'Home', link: '/' },
     { label: 'Features', link: '/features' },
     { label: 'About', link: '/about' },
     { label: 'Dashboard', link: '/dashboard' },
-  ];
+  ], []);
 
-  const socialItems = [
+  const socialItems = useMemo(() => [
     { label: 'Twitter', link: 'https://twitter.com' },
     { label: 'LinkedIn', link: 'https://linkedin.com' },
     { label: 'GitHub', link: 'https://github.com' },
-  ];
+  ], []);
+  
+  // Memoized toggle handler
+  const handleToggle = useCallback((value) => {
+    setIsOpen(value);
+  }, []);
+
+  const handleMenuClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
 
   return (
     <>
-      <div className={`fixed top-0 left-0 right-0 px-4 sm:px-6 lg:px-8 pt-4 ${isOpen ? 'z-[9998]' : 'z-[9999]'}`}>
+      <header className={`fixed top-0 left-0 right-0 px-4 sm:px-6 lg:px-8 pt-4 ${isOpen ? 'z-[9998]' : 'z-[9999]'}`}>
         <nav 
           className={`max-w-7xl mx-auto transition-all duration-500 rounded-2xl ${
             scrolled 
@@ -135,6 +147,8 @@ const Navbar = () => {
             backdropFilter: 'blur(24px)',
             WebkitBackdropFilter: 'blur(24px)',
           }}
+          role="navigation"
+          aria-label="Main navigation"
         >
           <div className="px-6 lg:px-8">
             <div className="flex justify-between items-center h-[72px]">
@@ -222,8 +236,10 @@ const Navbar = () => {
                 {/* Mobile Menu Button */}
                 <button
                   onClick={() => setIsOpen(!isOpen)}
-                  className="lg:hidden p-2.5 text-gray-400 hover:text-white hover:bg-white/[0.05] rounded-xl transition-all duration-300"
-                  aria-label="Toggle menu"
+                  className="lg:hidden p-2.5 text-gray-400 hover:text-white hover:bg-white/[0.05] rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+                  aria-expanded={isOpen}
+                  aria-controls="mobile-menu"
                 >
                   {isOpen ? <XIcon /> : <MenuIcon />}
                 </button>
@@ -232,13 +248,13 @@ const Navbar = () => {
           </div>
         </nav>
 
-        </div>
+        </header>
 
       {/* Staggered Mobile Menu */}
-      <div className="lg:hidden">
+      <div className="lg:hidden" id="mobile-menu">
         <StaggeredMenu
           isOpen={isOpen}
-          onToggle={setIsOpen}
+          onToggle={handleToggle}
           items={menuItems}
           socialItems={socialItems}
           displaySocials={true}
@@ -246,11 +262,13 @@ const Navbar = () => {
           isFixed={true}
           accentColor="#7C3AED"
           closeOnClickAway={true}
-          onMenuClose={() => setIsOpen(false)}
+          onMenuClose={handleMenuClose}
         />
       </div>
     </>
   );
-};
+});
+
+Navbar.displayName = 'Navbar';
 
 export default Navbar;

@@ -16,6 +16,9 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Prevent font size inflation on iOS */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
@@ -24,11 +27,15 @@
     color: #e5e5e5;
     min-height: 100vh;
     overflow-x: hidden;
+    /* Improve text rendering */
+    text-rendering: optimizeLegibility;
   }
 
   #root {
     min-height: 100vh;
     width: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   /* Elderly-friendly base text sizing */
@@ -48,18 +55,49 @@
     }
   }
 
-  /* Focus styles for accessibility */
+  /* Focus styles for accessibility - WCAG 2.1 AA compliant */
   :focus-visible {
-    outline: 2px solid #7c3aed;
+    outline: 3px solid #7c3aed;
     outline-offset: 2px;
     border-radius: 4px;
   }
 
+  /* Remove default focus for mouse users */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
   /* Selection color */
   ::selection {
-    background-color: rgba(124, 58, 237, 0.2);
-    color: #4c1d95;
+    background-color: rgba(124, 58, 237, 0.3);
+    color: #ffffff;
   }
+
+  /* Improve image rendering */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Ensure proper list semantics */
+  [role="list"] {
+    list-style: none;
+  }
+
+  /* Screen reader only - for accessibility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
 }
 
 /* ===== Component Layer ===== */

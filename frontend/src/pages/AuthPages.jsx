@@ -319,7 +319,7 @@ const AuthPages = () => {
                       value={formData.firstName}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3.5 bg-white/[0.05] border-2 border-white/10 rounded-xl text-white placeholder-gray-500 focus:bg-white/[0.08] focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 outline-none transition-all"
-                      placeholder="John"
+                      placeholder="Ahmed"
                     />
                   </div>
                   <div>
@@ -332,7 +332,7 @@ const AuthPages = () => {
                       value={formData.lastName}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3.5 bg-white/[0.05] border-2 border-white/10 rounded-xl text-white placeholder-gray-500 focus:bg-white/[0.08] focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 outline-none transition-all"
-                      placeholder="Doe"
+                      placeholder="Nada"
                     />
                   </div>
                 </div>
@@ -352,7 +352,7 @@ const AuthPages = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     className="w-full pl-12 pr-4 py-3.5 bg-white/[0.05] border-2 border-white/10 rounded-xl text-white placeholder-gray-500 focus:bg-white/[0.08] focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 outline-none transition-all"
-                    placeholder="name@example.com"
+                    placeholder="ahmed.nada@example.com"
                   />
                 </div>
               </div>

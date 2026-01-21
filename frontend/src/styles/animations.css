@@ -1,4 +1,11 @@
 /* ===== ALZCare.eg - Premium Animation Styles ===== */
+/* 
+ * Performance Guidelines:
+ * 1. Only animate transform and opacity (GPU-accelerated)
+ * 2. Use will-change sparingly - only on frequently animated elements
+ * 3. Prefer CSS animations over JS for simple transitions
+ * 4. Always respect prefers-reduced-motion
+ */
 
 /* ===== Keyframe Animations ===== */
 
@@ -14,7 +21,7 @@
 
 .animate-scroll-infinite {
   animation: scroll-infinite 15s linear infinite;
-  will-change: transform;
+  /* will-change applied only during animation for better performance */
 }
 
 /* Pause animation on hover for better UX */
@@ -796,4 +803,58 @@
 .bg-gradient-animate {
   background-size: 400% 400%;
   animation: gradientFlow 15s ease infinite;
+}
+
+/* ===== Reduced Motion Support ===== */
+/* Respects user's system preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable specific animations */
+  .animate-scroll-infinite,
+  .animate-blob,
+  .animate-blob-slow,
+  .animate-float,
+  .animate-float-rotate,
+  .animate-pulse-gentle,
+  .animate-pulse-glow,
+  .animate-heartbeat,
+  .animate-bounce-soft,
+  .animate-rotate-slow,
+  .animate-gradient,
+  .animate-shimmer,
+  .animate-morph {
+    animation: none !important;
+  }
+
+  /* Keep essential transitions but make them instant */
+  .hover-lift:hover,
+  .hover-scale:hover,
+  .hover-glow:hover {
+    transform: none !important;
+  }
+}
+
+/* ===== Performance Utilities ===== */
+/* Use these classes to enable GPU acceleration when needed */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Apply will-change only when element is about to animate */
+.will-animate {
+  will-change: transform, opacity;
+}
+
+/* Remove will-change after animation completes */
+.animation-complete {
+  will-change: auto;
 }
