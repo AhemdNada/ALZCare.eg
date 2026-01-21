@@ -858,3 +858,64 @@
 .animation-complete {
   will-change: auto;
 }
+
+/* ===== Sidebar Performance Optimizations ===== */
+/* 
+ * When sidebar is open, pause heavy background animations to ensure
+ * smooth 60fps sidebar transitions. This reduces GPU workload by
+ * stopping expensive animations that would compete for resources.
+ */
+
+/* Pause heavy decorative animations when sidebar is open */
+.sidebar-open .animate-blob,
+.sidebar-open .animate-blob-slow,
+.sidebar-open .animate-float,
+.sidebar-open .animate-float-rotate,
+.sidebar-open .animate-morph,
+.sidebar-open .animate-gradient,
+.sidebar-open .bg-gradient-animate,
+.sidebar-open .animate-scroll-infinite,
+.sidebar-open .animate-rotate-slow,
+.sidebar-open .floating-element {
+  animation-play-state: paused !important;
+}
+
+/* Pause SVG-specific animations in background containers */
+.sidebar-open .bg-animation svg,
+.sidebar-open [class*="animate-"] svg,
+.sidebar-open .decorative-bg svg {
+  animation-play-state: paused !important;
+}
+
+/* Reduce visual complexity of blurred/glowing elements */
+.sidebar-open .animate-pulse-glow,
+.sidebar-open .glow-purple,
+.sidebar-open .glow-purple-lg {
+  animation-play-state: paused !important;
+  box-shadow: none !important;
+}
+
+/* Ensure sidebar panel uses GPU-accelerated transforms only */
+.staggered-menu aside {
+  transform: translateX(100%) translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Remove will-change after sidebar animation settles */
+.staggered-menu.settled aside {
+  will-change: auto;
+}
+
+/* Isolate the main content layer during sidebar animation */
+.sidebar-open #root > div {
+  /* Create new stacking context to prevent repaints */
+  isolation: isolate;
+}
+
+/* Prevent layout thrashing on background elements */
+.sidebar-open .absolute,
+.sidebar-open [class*="blur-"] {
+  /* Force GPU layer without affecting visual appearance */
+  transform: translateZ(0);
+}

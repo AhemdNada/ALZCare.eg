@@ -36,6 +36,8 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    /* Create stacking context for better layer isolation */
+    isolation: isolate;
   }
 
   /* Elderly-friendly base text sizing */

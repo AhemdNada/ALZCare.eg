@@ -78,6 +78,27 @@ export const StaggeredMenu = ({
     }
   }, [isOpen]);
 
+  // Toggle body class for pausing heavy background animations
+  // This prevents jank by reducing GPU workload during sidebar animation
+  useEffect(() => {
+    const body = document.body;
+
+    if (isOpen) {
+      body.classList.add('sidebar-open');
+      // Prevent body scroll when menu is open
+      body.style.overflow = 'hidden';
+    } else {
+      body.classList.remove('sidebar-open');
+      body.style.overflow = '';
+    }
+
+    // Cleanup to prevent memory leaks and stale classes
+    return () => {
+      body.classList.remove('sidebar-open');
+      body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   // Main animation effect
   useEffect(() => {
     if (!shouldRender) return;
@@ -220,21 +241,28 @@ export const StaggeredMenu = ({
       // Prevent body scroll when menu is open
       style={{ touchAction: 'none' }}
     >
-      {/* Overlay - uses opacity only for animation */}
+      {/* Overlay - uses opacity only for animation (GPU accelerated) */}
       <div
         ref={overlayRef}
         className="absolute inset-0 bg-black/50 backdrop-blur-md"
         onClick={handleClose}
-        style={{ opacity: 0 }}
+        style={{ 
+          opacity: 0,
+          // GPU acceleration for smooth opacity transitions
+          transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden',
+        }}
         aria-hidden="true"
       />
 
-      {/* Panel - uses transform: translateX only */}
+      {/* Panel - uses transform: translateX only for GPU acceleration */}
       <aside
         ref={panelRef}
         className="absolute top-0 right-0 h-full w-full sm:w-[85%] md:w-[70%] max-w-md bg-[#0a0118] shadow-2xl shadow-purple-500/20 flex flex-col border-l border-purple-500/20"
         style={{
-          transform: 'translateX(100%)',
+          // GPU-accelerated transform - no left/right/width/margin
+          transform: 'translateX(100%) translateZ(0)',
+          backfaceVisibility: 'hidden',
           // Hide scrollbar
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
