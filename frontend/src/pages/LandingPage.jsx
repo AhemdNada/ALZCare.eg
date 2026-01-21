@@ -278,17 +278,14 @@ const LandingPage = () => {
               </p>
               
               <div className="flex gap-3 sm:gap-4 mb-12">
+                
                 <Link
-                  to="/auth/signup"
-                  className="group px-4 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-600 to-violet-600 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 transition-all duration-300 hover:-translate-y-1 flex items-center gap-2 text-sm sm:text-base"
+                  to="/dashboard"
+                  className="group px-4 sm:px-8 py-3 sm:py-4 border-2 border-white/10 text-white font-semibold rounded-xl hover:bg-white/[0.05] hover:border-purple-500/30 transition-all duration-300 flex items-center gap-2 text-sm sm:text-base"
                 >
-                  <span>Request Demo</span>
-                  <ChevronRightIcon />
-                </Link>
-                <button className="group px-4 sm:px-8 py-3 sm:py-4 border-2 border-white/10 text-white font-semibold rounded-xl hover:bg-white/[0.05] hover:border-purple-500/30 transition-all duration-300 flex items-center gap-2 text-sm sm:text-base">
                   <PlayCircleIcon />
-                  <span>Watch Video</span>
-                </button>
+                  <span>Explore Dashboards</span>
+                </Link>
               </div>
 
               {/* Trust Indicators */}
@@ -323,49 +320,7 @@ const LandingPage = () => {
       </section>
 
       {/* ===== TRUSTED BY - Infinite Loop ===== */}
-      <section className="py-12 bg-[#0d0520] border-y border-white/[0.05] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4">
-          <p className="text-center text-gray-500 mb-8 font-medium">Trusted by leading healthcare institutions</p>
-        </div>
-        
-        {/* Infinite Scroll Container */}
-        <div className="relative">
-          {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#0d0520] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#0d0520] to-transparent z-10 pointer-events-none" />
-          
-          {/* Scrolling track */}
-          <div className="flex animate-scroll-infinite">
-            {/* First set */}
-            <div className="flex items-center gap-12 px-6 shrink-0">
-              {trustedBy.map((name, i) => (
-                <div key={`first-${i}`} className="flex items-center gap-2 text-gray-500 hover:text-purple-400 transition-colors whitespace-nowrap">
-                  <ShieldIcon />
-                  <span className="font-semibold">{name}</span>
-                </div>
-              ))}
-            </div>
-            {/* Second set (duplicate for seamless loop) */}
-            <div className="flex items-center gap-12 px-6 shrink-0">
-              {trustedBy.map((name, i) => (
-                <div key={`second-${i}`} className="flex items-center gap-2 text-gray-500 hover:text-purple-400 transition-colors whitespace-nowrap">
-                  <ShieldIcon />
-                  <span className="font-semibold">{name}</span>
-                </div>
-              ))}
-            </div>
-            {/* Third set (extra for wider screens) */}
-            <div className="flex items-center gap-12 px-6 shrink-0">
-              {trustedBy.map((name, i) => (
-                <div key={`third-${i}`} className="flex items-center gap-2 text-gray-500 hover:text-purple-400 transition-colors whitespace-nowrap">
-                  <ShieldIcon />
-                  <span className="font-semibold">{name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+    
 
       {/* ===== FEATURES SECTION ===== */}
       <section ref={featuresRef} className="py-24 bg-[#0a0118] relative overflow-hidden">
