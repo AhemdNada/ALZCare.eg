@@ -2,6 +2,33 @@
 
 /* ===== Keyframe Animations ===== */
 
+/* Infinite Scroll Animation for Logo Loop */
+@keyframes scroll-infinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animate-scroll-infinite {
+  animation: scroll-infinite 15s linear infinite;
+  will-change: transform;
+}
+
+/* Pause animation on hover for better UX */
+.animate-scroll-infinite:hover {
+  animation-play-state: paused;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animate-scroll-infinite {
+    animation: none;
+  }
+}
+
 /* Pulse Border Animation for Dashboard Switch */
 @keyframes pulse-border {
   0%, 100% {

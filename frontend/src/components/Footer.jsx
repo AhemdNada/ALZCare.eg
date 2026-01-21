@@ -227,19 +227,19 @@ const Footer = () => {
                   <div className="h-9 w-9 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 flex-shrink-0">
                     <MailIcon />
                   </div>
-                  <span>support@neurocare-ai.com</span>
+                  <span>alzcare@gmail.com</span>
                 </a>
                 <a href="tel:1-800-123-4567" className="flex items-center gap-3 text-gray-400 hover:text-purple-400 transition-colors text-sm">
                   <div className="h-9 w-9 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 flex-shrink-0">
                     <PhoneIcon />
                   </div>
-                  <span>1-800-NEURO-AI</span>
+                  <span>03541234567</span>
                 </a>
                 <div className="flex items-center gap-3 text-gray-400 text-sm">
                   <div className="h-9 w-9 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 flex-shrink-0">
                     <MapPinIcon />
                   </div>
-                  <span>San Francisco, CA</span>
+                  <span>Alexandria, Egypt</span>
                 </div>
               </div>
 
@@ -274,11 +274,7 @@ const Footer = () => {
                 ))}
               </div>
             </div>
-            <div className="flex items-center gap-2 text-purple-400">
-              <span className="text-sm">Made with</span>
-              <HeartIcon />
-              <span className="text-sm">for Alzheimer's care</span>
-            </div>
+            
           </div>
         </div>
       </div>

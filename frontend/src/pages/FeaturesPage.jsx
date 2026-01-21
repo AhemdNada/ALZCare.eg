@@ -125,6 +125,17 @@ const TrendingUpIcon = () => (
   </svg>
 );
 
+const ChatbotIcon = () => (
+  <svg className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2a8 8 0 0 0-8 8v4a8 8 0 0 0 16 0v-4a8 8 0 0 0-8-8z"/>
+    <path d="M8 10h.01"/>
+    <path d="M16 10h.01"/>
+    <path d="M9 14c.5.5 1.5 1 3 1s2.5-.5 3-1"/>
+    <path d="M12 18v4"/>
+    <path d="M8 22h8"/>
+  </svg>
+);
+
 const CheckCircleIcon = () => (
   <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
@@ -338,20 +349,6 @@ const FeaturesPage = () => {
   const features = [
     {
       id: 1,
-      icon: UserIcon,
-      title: "Face Recognition Assistance",
-      description: "AI-powered facial recognition helps patients identify family members and caregivers, reducing confusion and anxiety.",
-      benefits: [
-        "Real-time face identification with names",
-        "Privacy-first on-device processing",
-        "Continuous learning from family photos",
-        "Reduces patient anxiety and confusion"
-      ],
-      usage: "500+",
-      gradient: "from-purple-500 to-purple-700"
-    },
-    {
-      id: 2,
       icon: MicIcon,
       title: "Voice-Based Interaction",
       description: "Natural voice commands and conversational AI for easy interaction, especially for patients with mobility challenges.",
@@ -365,63 +362,21 @@ const FeaturesPage = () => {
       gradient: "from-violet-500 to-purple-600"
     },
     {
+      id: 2,
+      icon: UserIcon,
+      title: "Face Recognition Assistance",
+      description: "AI-powered facial recognition helps patients identify family members and caregivers, reducing confusion and anxiety.",
+      benefits: [
+        "Real-time face identification with names",
+        "Privacy-first on-device processing",
+        "Continuous learning from family photos",
+        "Reduces patient anxiety and confusion"
+      ],
+      usage: "500+",
+      gradient: "from-purple-500 to-purple-700"
+    },
+    {
       id: 3,
-      icon: BellIcon,
-      title: "Medication Reminders",
-      description: "Smart medication scheduling with visual and auditory reminders, plus family notification system for missed doses.",
-      benefits: [
-        "Customizable reminder schedules",
-        "Pharmacy integration",
-        "Missed dose notifications",
-        "Medication interaction alerts"
-      ],
-      usage: "1.2K+",
-      gradient: "from-purple-600 to-purple-800"
-    },
-    {
-      id: 4,
-      icon: CalendarIcon,
-      title: "Daily Schedule Assistant",
-      description: "Structured daily routine guidance including meals, activities, appointments, and social engagements.",
-      benefits: [
-        "Personalized activity planning",
-        "Family schedule management",
-        "Appointment reminders",
-        "Routine consistency tracking"
-      ],
-      usage: "650+",
-      gradient: "from-violet-600 to-purple-700"
-    },
-    {
-      id: 5,
-      icon: AlertCircleIcon,
-      title: "Emergency Button",
-      description: "One-touch emergency alert system connecting patients directly to caregivers and emergency services.",
-      benefits: [
-        "Instant caregiver alerts",
-        "Automatic location sharing",
-        "Medical info transmission",
-        "Two-way video calling"
-      ],
-      usage: "400+",
-      gradient: "from-rose-500 to-purple-600"
-    },
-    {
-      id: 6,
-      icon: MapPinIcon,
-      title: "Smart Location Tracking",
-      description: "Geofencing and indoor tracking for patient safety with family access to real-time location data.",
-      benefits: [
-        "Real-time GPS tracking",
-        "Indoor positioning system",
-        "Safe zone configuration",
-        "Wandering pattern detection"
-      ],
-      usage: "750+",
-      gradient: "from-purple-500 to-violet-700"
-    },
-    {
-      id: 7,
       icon: HeartIcon,
       title: "Emotion Awareness",
       description: "AI detects emotional states through voice and facial analysis, providing appropriate responses or alerting caregivers.",
@@ -435,7 +390,35 @@ const FeaturesPage = () => {
       gradient: "from-pink-500 to-purple-600"
     },
     {
-      id: 8,
+      id: 4,
+      icon: ChatbotIcon,
+      title: "Alzheimer's Chatbot NLP",
+      description: "Specialized AI chatbot trained exclusively on Alzheimer's knowledge to answer patient and caregiver questions with accurate, compassionate responses.",
+      benefits: [
+        "Alzheimer's-specific Q&A",
+        "Symptom information and guidance",
+        "Caregiver support resources",
+        "24/7 instant responses"
+      ],
+      usage: "1000+",
+      gradient: "from-violet-700 to-purple-900"
+    },
+    {
+      id: 5,
+      icon: BellIcon,
+      title: "Medication Reminders",
+      description: "Smart medication scheduling with visual and auditory reminders, plus family notification system for missed doses.",
+      benefits: [
+        "Customizable reminder schedules",
+        "Pharmacy integration",
+        "Missed dose notifications",
+        "Medication interaction alerts"
+      ],
+      usage: "1.2K+",
+      gradient: "from-purple-600 to-purple-800"
+    },
+    {
+      id: 6,
       icon: BrainIcon,
       title: "Memory Assistant",
       description: "Digital memory book, reminiscence therapy tools, and cognitive exercise games designed for Alzheimer's patients.",
@@ -449,18 +432,46 @@ const FeaturesPage = () => {
       gradient: "from-purple-600 to-purple-900"
     },
     {
-      id: 9,
-      icon: TrendingUpIcon,
-      title: "Smart Recommendations",
-      description: "AI-powered suggestions for activities, therapies, and care adjustments based on comprehensive patient data analysis.",
+      id: 7,
+      icon: MapPinIcon,
+      title: "Smart Location Tracking",
+      description: "Geofencing and indoor tracking for patient safety with family access to real-time location data.",
       benefits: [
-        "Personalized care suggestions",
-        "Pattern recognition",
-        "Predictive health insights",
-        "Treatment optimization"
+        "Real-time GPS tracking",
+        "Indoor positioning system",
+        "Safe zone configuration",
+        "Wandering pattern detection"
       ],
-      usage: "200+",
-      gradient: "from-violet-700 to-purple-900"
+      usage: "750+",
+      gradient: "from-purple-500 to-violet-700"
+    },
+    {
+      id: 8,
+      icon: CalendarIcon,
+      title: "Daily Schedule Assistant",
+      description: "Structured daily routine guidance including meals, activities, appointments, and social engagements.",
+      benefits: [
+        "Personalized activity planning",
+        "Family schedule management",
+        "Appointment reminders",
+        "Routine consistency tracking"
+      ],
+      usage: "650+",
+      gradient: "from-violet-600 to-purple-700"
+    },
+    {
+      id: 9,
+      icon: AlertCircleIcon,
+      title: "Emergency Button",
+      description: "One-touch emergency alert system connecting patients directly to caregivers and emergency services.",
+      benefits: [
+        "Instant caregiver alerts",
+        "Automatic location sharing",
+        "Medical info transmission",
+        "Two-way video calling"
+      ],
+      usage: "400+",
+      gradient: "from-rose-500 to-purple-600"
     }
   ];
 

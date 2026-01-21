@@ -322,17 +322,47 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* ===== TRUSTED BY ===== */}
-      <section className="py-12 bg-[#0d0520] border-y border-white/[0.05]">
+      {/* ===== TRUSTED BY - Infinite Loop ===== */}
+      <section className="py-12 bg-[#0d0520] border-y border-white/[0.05] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
           <p className="text-center text-gray-500 mb-8 font-medium">Trusted by leading healthcare institutions</p>
-          <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-16">
-            {trustedBy.map((name, i) => (
-              <div key={i} className="flex items-center gap-2 text-gray-500 hover:text-purple-400 transition-colors">
-                <ShieldIcon />
-                <span className="font-semibold">{name}</span>
-              </div>
-            ))}
+        </div>
+        
+        {/* Infinite Scroll Container */}
+        <div className="relative">
+          {/* Fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#0d0520] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#0d0520] to-transparent z-10 pointer-events-none" />
+          
+          {/* Scrolling track */}
+          <div className="flex animate-scroll-infinite">
+            {/* First set */}
+            <div className="flex items-center gap-12 px-6 shrink-0">
+              {trustedBy.map((name, i) => (
+                <div key={`first-${i}`} className="flex items-center gap-2 text-gray-500 hover:text-purple-400 transition-colors whitespace-nowrap">
+                  <ShieldIcon />
+                  <span className="font-semibold">{name}</span>
+                </div>
+              ))}
+            </div>
+            {/* Second set (duplicate for seamless loop) */}
+            <div className="flex items-center gap-12 px-6 shrink-0">
+              {trustedBy.map((name, i) => (
+                <div key={`second-${i}`} className="flex items-center gap-2 text-gray-500 hover:text-purple-400 transition-colors whitespace-nowrap">
+                  <ShieldIcon />
+                  <span className="font-semibold">{name}</span>
+                </div>
+              ))}
+            </div>
+            {/* Third set (extra for wider screens) */}
+            <div className="flex items-center gap-12 px-6 shrink-0">
+              {trustedBy.map((name, i) => (
+                <div key={`third-${i}`} className="flex items-center gap-2 text-gray-500 hover:text-purple-400 transition-colors whitespace-nowrap">
+                  <ShieldIcon />
+                  <span className="font-semibold">{name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
